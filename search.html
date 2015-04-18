@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>data</title>
+
+	<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+</head>
+<body>
+
+	<script>
+
+		// function mycallback (data) {
+		// 	console.log('data: ', data); 
+		// }
+
+		$(function() {
+
+			// $.get('http://api.anywayanyday.com/api/NewRequest3/?Route=2202MOWLEDAD1CN0IN0SCE&_Serialize=JSON&callback', // закрыто для ображения 
+			// 	function (data, textStatus, xhr) {
+			// 	console.log('data: ', data); 
+			// });
+
+			var url = 'http://api.anywayanyday.com/api/NewRequest3/?Route=2202MOWLEDAD1CN0IN0SCE&_Serialize=JSON&callback=?';
+			 
+			$.ajax({
+			   type: 'GET',
+			    url: url,
+			    async: false,
+			    jsonpCallback: 'jsonCallback',
+			    contentType: "application/json",
+			    dataType: 'jsonp',
+			    success: function(json) {
+			       console.log('json', json.IdSynonym);
+
+			       var url = 'http://api.anywayanyday.com/api/RequestState/?R='+json.IdSynonym+'&_Serialize=JSON&callback=?';
+
+			       $.ajax({
+			          type: 'GET',
+			           url: url,
+			           async: false,
+			           jsonpCallback: 'jsonCallback',
+			           contentType: "application/json",
+			           dataType: 'jsonp',
+			           success: function(json) {
+			              console.log('json', json);
+			           },
+			           error: function(e) {
+			              console.log(e.message);
+			           }
+			       });
+
+			    },
+			    error: function(e) {
+			       console.log(e.message);
+			    }
+			});
+
+		});
+	</script>
+
+</body>
+</html>
